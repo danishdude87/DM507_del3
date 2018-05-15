@@ -1,3 +1,4 @@
+package del3;
 
 import java.util.Scanner;
 
@@ -16,5 +17,6 @@ public class Heapsort {
 	    System.out.println(pq.extractMin().key);
 	    n--;
 	}
+	sc.close();
    }
 }

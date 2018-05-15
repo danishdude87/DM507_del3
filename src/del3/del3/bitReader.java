@@ -9,14 +9,12 @@ public class bitReader {
 	public List<String> bitReader(String a) {
 		List<String> list = new ArrayList<>();
 		try {
-			// FileInputStream fin = new FileInputStream(args[0]); // args[0] gør at det er
-			// første argumemnt vi skriver i commandline efterfølgende. Her skal det være en
-			// fil.
 			FileInputStream fin = new FileInputStream(a);
 			BitInputStream bin = new BitInputStream(fin);
 			int x;
 			int y = 0;
 			String byt = "";
+
 			do {
 				x = bin.readBit();
 				if (y < 8) { // Vil kun tilføje byte, så -1 og "løse" bit der må være bliver ikke medtaget.
@@ -30,6 +28,7 @@ public class bitReader {
 				}
 
 			} while (x != -1);// minus en er det der sker når intet er tilbage i filen)
+
 			fin.close();
 			bin.close();
 		} catch (Exception e) {

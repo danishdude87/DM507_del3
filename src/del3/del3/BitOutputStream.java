@@ -62,7 +62,7 @@ public final class BitOutputStream {
     // minimum number of "0" bits (between 0 and 7 of them) are
     // written as padding to reach the next byte boundary.
     public void close() throws IOException {
-	while (numBitsInCurrentByte != 0)
+	while (numBitsInCurrentByte != 0) 
 	    writeBit(0);
 	output.close();
     }
