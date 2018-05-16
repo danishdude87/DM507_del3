@@ -17,9 +17,9 @@ public class Huffman {
 	public void Decode(String path, String exit) {
 
 		File exitFile = new File(exit);
-		bitReader read = new bitReader(); // Fejlen er i bitReader da den ikke får en hel byte til sidst.
-		List<String> b = read.bitReader(path); // Kan se at den manglende byte er i den komprimerede fil.
-		List<Integer> freq = new ArrayList<>();// bit der mangler er 100011	
+		bitReader read = new bitReader(); 
+		List<String> b = read.bitReader(path); 
+		List<Integer> freq = new ArrayList<>();
 		String fByte;
 		String[] codeTable = new String[256];
 
@@ -84,7 +84,6 @@ public class Huffman {
 				for (int i = 0; i < charList.size(); i++) {
 					s = s + charList.get(i);
 					index = codeArray.indexOf(s);
-					//System.out.println(s + "  " + index);
 					if (index != -1) {
 						bitValue = auxList.get(index).toCharArray();
 						for (int j = 0; j < bitValue.length; j++) {
@@ -119,7 +118,7 @@ public class Huffman {
 		Huffman.compress(codeTable, freq, path, exit);
 	}
 
-	private static HuffmanNode HuffmanGenerator(List<Integer> x) {
+	public static HuffmanNode HuffmanGenerator(List<Integer> x) {
 		List<Element> nodeList = new ArrayList<>();
 		PQHeap PqHeap = new PQHeap(256);
 		for (int i = 0; i < x.size(); i++) {
@@ -143,8 +142,11 @@ public class Huffman {
 		HuffmanNode root = (HuffmanNode) PqHeap.extractMin().getObject(); // The nodeList is now just one index but
 		return root;
 	}
-
-	private static String[] buildCode(String[] codeTable, Object node, String s) {
+	
+/* Goes through a huffman tree recursively. 
+ * Must be given an empty String[] of length 256, an huffman thee from the root-node and an empty string. 
+ */
+	public static String[] buildCode(String[] codeTable, Object node, String s) {
 		HuffmanNode root = (HuffmanNode) node;
 		if (root.returnLeft() != null || root.returnRight() != null) {
 			buildCode(codeTable, root.returnLeft(), s + '0');
@@ -155,7 +157,7 @@ public class Huffman {
 		return codeTable;
 	}
 
-	private static void compress(String[] codeTable, List<Integer> freq, String path, String exit) {
+	static void compress(String[] codeTable, List<Integer> freq, String path, String exit) {
 		File exitFile = new File(exit);
 		ArrayList<String> auxList = new ArrayList<>();
 		for (int i = 0; i < 256; i++) {
@@ -167,7 +169,7 @@ public class Huffman {
 			try {
 				if (exitFile.exists()) {
 					System.out.println("File existes. Press y  to overwrite existing file, or press other to cancel:");
-					Scanner input = new Scanner(System.in);
+					Scanner input = new Scanner(System.in); 
 					String action;
 					action = input.next();
 					if (!action.equals("y")) {
@@ -179,7 +181,6 @@ public class Huffman {
 
 				FileOutputStream OPS = new FileOutputStream(exitFile, false);
 				BitOutputStream BOS = new BitOutputStream(OPS);
-				String byteValue;
 				char[] bitValue;
 
 				for (int i = 0; i < freq.size(); i++) {
